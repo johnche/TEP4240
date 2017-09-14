@@ -18,20 +18,20 @@ clc
 tmax=5;
 y0=2/25;
 
-nastyode = @(t, y) 5*(y - t^2);
-
-%Numerial solution ODE45,ODE23, ODE113, ODE15s, ODE23s, ODE23t, ODE23tb
-[t45, y45] = ode45(nastyode, [0 5], 2/25);
-[t23, y23] = ode23(nastyode, [0 5], 2/25);
-[t113, y113] = ode113(nastyode, [0 5], 2/25);
-[t15s, y15s] = ode15s(nastyode, [0 5], 2/25);
-[t23s, y23s] = ode23s(nastyode, [0 5], 2/25);
-[t23t, y23t] = ode23t(nastyode, [0 5], 2/25);
-[t23tb, y23tb] = ode23tb(nastyode, [0 5], 2/25);
+dy = @(t, y) 5*(y - t^2);
 
 %Analytic solution:
 ta=linspace(0,tmax);
 ya=ta.^2+2*ta/5+2/25;
+
+%Numerial solution ODE45,ODE23, ODE113, ODE15s, ODE23s, ODE23t, ODE23tb
+[t45, y45] = ode45(dy, ta, y0);
+[t23, y23] = ode23(dy, ta, y0);
+[t113, y113] = ode113(dy, ta, y0);
+[t15s, y15s] = ode15s(dy, ta, y0);
+[t23s, y23s] = ode23s(dy, ta, y0);
+[t23t, y23t] = ode23t(dy, ta, y0);
+[t23tb, y23tb] = ode23tb(dy, ta, y0);
 
 figure(1)
 title('Solution to dy/dt = 5(y - t^2)')
