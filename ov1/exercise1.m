@@ -95,19 +95,20 @@ a = 1.0;
 b = 0.002;
 c = 0.5;
 d = 0.001;
-%e = 0.001;
-%f = 0.001;
-%g = 0.1;
-%h = 0.001;
-%i = 0.001;
+e = 0.001;
+f = 0.001;
+g = 0.1;
+h = 0.001;
+i = 0.001;
 tmax = 20.;
 dt = .01;
 
 % Initial conditions:
-R = 1000.0;
-F = 100.0;
-%H = 10.0;
+R0 = 1000.0;
+F0 = 100.0;
+H0 = 10.0;
 
+R = R0; F = F0; H = 0;
 % Prepare figure:
 figure(2)
 clf
@@ -117,11 +118,27 @@ xlabel('Time [year]')
 ylabel('Population')
 grid
 hold on
-
+figure(2)
 % Main loop:
 for t = 0:dt:tmax
-%  ?
+    if t == 2 % 0.17
+        H = H0;
+    end
+    dR_dt = a.*R - b.*R.*F - e.*R.*H;
+    dF_dt = -c.*F + d.*R.*F - f.*F.*H;
+    dH_dt = -g.*H + h.*R.*H + i.*F.*H;
+    R = R + dt*dR_dt;
+    F = F + dt*dF_dt;
+    H = H + dt*dH_dt;
+    drawnow limitrate
+    plot(t, R, 'ro', t, F, 'bo', t, H, 'go');
 end
 
-legend('Rabbits','Foxes')
+t=linspace(0,tmax);
+d_dt = @(t, RF) [a.*RF(1) - b.*RF(1).*RF(2); -c.*RF(2) + d.*RF(1).*RF(2)];
+[t45, RF45] = ode45(d_dt, t, [R0, F0]);
+plot(t45, RF45(:,1),'r')
+plot(t45, RF45(:,2),'b')
+
+legend('Rabbits','Foxes','Hunters')
 hold off
