@@ -10,17 +10,21 @@ fan=[0, 400, 800, 1200;
 
 figure(1)
 hold on
-[ motorSteps,motorLinear,motorNearest,motorPchip,motorSpline ] = interpolations(motor);
+[ motorSpeeds,motorLinear,motorNearest,motorPchip,motorSpline ] = interpolations(motor);
 plot(motor(1,:), motor(2,:), 'b+')
-plot(motorSteps, motorLinear, 'b-')
-plot(motorSteps, motorNearest, 'b--')
-plot(motorSteps, motorPchip, 'b:')
-plot(motorSteps, motorSpline, 'b-.')
-[ fanSteps,fanLinear,fanNearest,fanPchip,fanSpline ] = interpolations(fan);
+%plot(motorSteps, motorLinear, 'b-.')
+%plot(motorSteps, motorNearest, 'b--')
+%plot(motorSteps, motorPchip, 'b:')
+plot(motorSpeeds, motorSpline, 'b-')
+[ fanSpeeds,fanLinear,fanNearest,fanPchip,fanSpline ] = interpolations(fan);
 plot(fan(1,:), fan(2,:), 'r+')
-plot(fanSteps, fanLinear, 'r-')
-plot(fanSteps, fanNearest, 'r--')
-plot(fanSteps, fanPchip, 'r:')
-plot(fanSteps, fanSpline, 'r-.')
-legend('motor','linear', 'nearest','pchip','cubic','fan','linear', 'nearest','pchip','cubic')
+%plot(fanSteps, fanLinear, 'r-.')
+%plot(fanSteps, fanNearest, 'r--')
+%plot(fanSteps, fanPchip, 'r:')
+plot(fanSpeeds, fanSpline, 'r-')
+legend('motor',...'linear','nearest','pchip',
+    'cubic','fan',...'linear','nearest','pchip',
+    'cubic')
+ylabel('torque, in.-lb')
+xlabel('speed, rpm')
 hold off
