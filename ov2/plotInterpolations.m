@@ -13,7 +13,8 @@ figure(1)
 ylabel('torque, in.-lb')
 xlabel('speed, rpm')
 hold on
-[ motorSpeeds,motorLinear,motorNearest,motorPchip,motorSpline ] = interpolations(motor);
+steps = linspace(motor(1), motor(1, end));
+[ motorLinear,motorNearest,motorPchip,motorSpline ] = interpolations(motor, steps);
 plot(motor(1,:), motor(2,:), 'b+')
 %plot(motorSteps, motorLinear, 'b-.')
 %plot(motorSteps, motorNearest, 'b--')
@@ -22,7 +23,7 @@ plot(motorSpeeds, motorSpline, 'b-')
 [motorMaxPower, motorMaxPowerIndex] = max(motorSpline)
 motorMaxPower_speed = motorSpeeds(motorMaxPowerIndex)
 plot(motorMaxPower_speed, motorMaxPower, 'bd')
-[ fanSpeeds,fanLinear,fanNearest,fanPchip,fanSpline ] = interpolations(fan);
+[ fanLinear,fanNearest,fanPchip,fanSpline ] = interpolations(fan, steps);
 plot(fan(1,:), fan(2,:), 'r+')
 %plot(fanSteps, fanLinear, 'r-.')
 %plot(fanSteps, fanNearest, 'r--')
