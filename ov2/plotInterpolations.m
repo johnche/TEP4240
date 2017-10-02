@@ -8,11 +8,6 @@ motor=[0, 400, 800, 1200, 1600, 1763;
 fan=[0, 400, 800, 1200;
      2, 3.8, 7.5,   14];
 
-figure(1)
-
-ylabel('torque, in.-lb')
-xlabel('speed, rpm')
-hold on
 
 stepcount = 1000;
 speeds = linspace(motor(1), motor(1, end), stepcount);
@@ -26,6 +21,24 @@ maxPower_motorSpeed = speeds(maxPower_motorIndex);
 maxPower_fanTorque = fanSpline(maxPower_fanIndex);
 maxPower_fanSpeed = speeds(maxPower_fanIndex);
 beltRatio = maxPower_motorSpeed/maxPower_fanSpeed;
+
+disp('a)')
+disp('  S --> R')
+
+fprintf('b)\n')
+fprintf('  maxPower_motorSpeed = %f\n', maxPower_motorSpeed)
+fprintf('  maxPower = %f\n', maxPower)
+
+fprintf('c)\n')
+fprintf('  maxPower_fanSpeed = %f\n', maxPower_fanSpeed)
+fprintf('  maxPower_fanTorque = %f\n', maxPower_fanTorque)
+fprintf('  beltRatio = %f\n', beltRatio)
+
+figure(1)
+
+ylabel('torque, in.-lb')
+xlabel('speed, rpm')
+hold on
 
 plot(motor(1,:), motor(2,:), 'b+')
 plot(speeds, motorSpline, 'b-')
