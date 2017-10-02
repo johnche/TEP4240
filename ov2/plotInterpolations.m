@@ -19,8 +19,13 @@ speeds = linspace(motor(1), motor(1, end), stepcount);
 [ motorLinear,motorNearest,motorPchip,motorSpline ] = interpolations(motor, speeds);
 [ fanLinear,fanNearest,fanPchip,fanSpline ] = interpolations(fan, speeds);
 
-[maxMotorPower,maxPower_motorIndex] = max(speeds.*motorSpline.*(motorSpline <= 4));
-[~,maxPower_fanIndex] = min(abs(speeds.*fanSpline-maxMotorPower));
+[maxPower,maxPower_motorIndex] = max(speeds.*motorSpline.*(motorSpline <= 4));
+[~,maxPower_fanIndex] = min(abs(speeds.*fanSpline-maxPower));
+maxPower_motorTorque = motorSpline(maxPower_motorIndex);
+maxPower_motorSpeed = speeds(maxPower_motorIndex);
+maxPower_fanTorque = fanSpline(maxPower_fanIndex);
+maxPower_fanSpeed = speeds(maxPower_fanIndex);
+beltRatio = maxPower_motorSpeed/maxPower_fanSpeed;
 
 plot(motor(1,:), motor(2,:), 'b+')
 %plot(motorSteps, motorLinear, 'b-.')
@@ -34,8 +39,6 @@ plot(fan(1,:), fan(2,:), 'r+')
 %plot(fanSteps, fanNearest, 'r--')
 %plot(fanSteps, fanPchip, 'r:')
 plot(speeds, fanSpline, 'r-')
-maxPower_fanTorque = fanSpline(maxPower_fanIndex);
-maxPower_fanSpeed = speeds(maxPower_fanIndex);
 plot(maxPower_fanSpeed, maxPower_fanTorque, 'rd')
 
 legend('motor real',...'linear','nearest','pchip',
