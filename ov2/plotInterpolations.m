@@ -23,7 +23,7 @@ maxPower_fanSpeed = speeds(maxPower_fanIndex);
 beltRatio = maxPower_motorSpeed/maxPower_fanSpeed;
 
 disp('a)')
-disp('  S --> R')
+disp('  S --> 1 --> R')
 
 fprintf('b)\n')
 fprintf('  maxPower_motorSpeed = %f\n', maxPower_motorSpeed)
