@@ -20,24 +20,24 @@ maxPower_motorTorque = motorSpline(maxPower_motorIndex);
 maxPower_motorSpeed = speeds(maxPower_motorIndex);
 maxPower_fanTorque = fanSpline(maxPower_fanIndex);
 maxPower_fanSpeed = speeds(maxPower_fanIndex);
-beltRatio = maxPower_motorSpeed/maxPower_fanSpeed;
+beltRatio = maxPower_motorTorque/maxPower_fanTorque;
 
-disp('a)')
-disp('  S --> 1 --> R')
+fprintf('a)\n')
+fprintf('  S --> T --> R\n')
 
 fprintf('b)\n')
-fprintf('  maxPower_motorSpeed = %f\n', maxPower_motorSpeed)
-fprintf('  maxPower = %f\n', maxPower)
+fprintf('  max power = %f\n', maxPower)
+fprintf('  motor speed at max power = %f\n', maxPower_motorSpeed)
 
 fprintf('c)\n')
-fprintf('  maxPower_fanSpeed = %f\n', maxPower_fanSpeed)
-fprintf('  maxPower_fanTorque = %f\n', maxPower_fanTorque)
-fprintf('  beltRatio = %f\n', beltRatio)
+fprintf('  T = %f\n', beltRatio)
+fprintf('  fan speed at max power = %f\n', maxPower_fanSpeed)
+fprintf('  fan torque at max power = %f\n', maxPower_fanTorque)
 
 figure(1)
-
 ylabel('torque, in.-lb')
 xlabel('speed, rpm')
+axis([speeds(1) speeds(1, end), min(motorSpline) max(motorSpline)*1.4])
 hold on
 
 plot(motor(1,:), motor(2,:), 'b+')
@@ -47,9 +47,12 @@ plot(speeds(maxPower_motorIndex), motorSpline(maxPower_motorIndex), 'bd')
 plot(fan(1,:), fan(2,:), 'r+')
 plot(speeds, fanSpline, 'r-')
 plot(maxPower_fanSpeed, maxPower_fanTorque, 'rd')
+plot(speeds/beltRatio, fanSpline*beltRatio, 'r-.')
+
+plot(speeds, maxPower./speeds)
 
 legend('motor real',...'linear','nearest','pchip',
     'motor interpolated','motor max power', 'fan real',...'linear','nearest','pchip',
-    'fan interpolated','fan max power',...
+    'fan interpolated','fan max power','fan transformed',...
     'Location', 'northwest')
 hold off
