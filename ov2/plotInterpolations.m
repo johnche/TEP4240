@@ -57,6 +57,10 @@ legend('motor real',...'linear','nearest','pchip',
     'Location', 'northwest')
 hold off
 
+%d)
+img = imread('bondgraph_XD.jpg');
+image(img);
+
 %e)
 tmax=30;
 dt=.1;                                        
