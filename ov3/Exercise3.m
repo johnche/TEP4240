@@ -1,6 +1,14 @@
 clear all
 clc
-%%Constants
+
+%% Bond Graph 
+
+img = imread('2.jpg');
+img2 = imread('1.jpg');
+figure, imshow(img);
+figure, imshow(img2);
+
+%% Constants
 global h_max h_omega I C R g
 
 I = 70;
@@ -10,9 +18,9 @@ k = I*abs(g)/Amptude;
 C= 1/k;
 
 omega = sqrt(k/I);
-period = 2*pi/omega;
-dampingtime = .2;
-R = I/dampingtime;
+period = 2*pi/omega;             
+R = I*omega/pi;          %R chosen such that the amplitude is reduced by
+                            %e^-1 after t = T = 2*pi/omega
 tmax = 5;
 
 fprintf(' spring constant k = %i\n', k)
@@ -20,7 +28,7 @@ fprintf(' natural frequency omega = %i\n', omega)
 fprintf(' one period = %f\n', period)
 fprintf(' damping constant R = %i\n', R)
 
-%%First Simulation: Finding constants
+%% First Simulation: Finding constants
 %A person with mass m jumps on the bike at time t=0
 %Expected behavoiur: The displacement u should level off after a while
 %-------------------------------------------------------------------------
@@ -43,7 +51,7 @@ text(1.0, -0.35,'The displacement oscillates nicely towards the Amplitude')
 grid on
 hold on
 
-%%Second simulation
+%% Second simulation
 % Simulates the vertical motion of when he's cycling at constant speed and 
 % the ground level changes as h(y) 
 %-------------------------------------------------------------------------
