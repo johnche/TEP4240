@@ -1,5 +1,18 @@
 clear all
+close all
 clc
+%% Bond Graphs
+img = imread('1_d.jpg');
+img2 = imread('2_a.jpg');
+img3 = imread('3_b.png');
+img4 = imread('4_a.jpg');
+figure, imshow(img);
+figure, imshow(img2);
+figure, imshow(img3);
+figure, imshow(img4);
+
+%% Simulation
+
 g = -10;
 m = 2;
 k = 2;
