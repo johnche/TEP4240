@@ -1,6 +1,8 @@
 %% Problem 1: Finding the tallest point on an island
 
 z = @(x) -sin(4*pi*x(1))*sin(5*pi*x(2))*(2 - x(1))*(2 - x(2)); %x in km
+options = optimoptions('fmincon', 'Display', 'off');
+
 % set z to negtive in order to use fmincon
 
 %Quadratic (x_1 and x_2 from 0 to 1):
@@ -11,11 +13,11 @@ xlength = length(testnormal);
 xmax = -100;
 lb = zeros(size(testfmincon));
 up = ones(size(testfmincon));
-[x, fval] = fmincon(z, testfmincon, [], [], [], [], lb, up);
+[x, fval] = fmincon(z, testfmincon, [], [], [], [], lb, up, [], options);
 fvalues = zeros(1, xlength);
 for q=1:xlength
     xin = [testnormal(1, q), testnormal(2, q)];
-    [x, fvalu] = fmincon(z, xin, [], [], [], [], lb, up);
+    [x, fvalu] = fmincon(z, xin, [], [], [], [], lb, up, [], options);
     fvalues(q) = fvalu;
 end
 
