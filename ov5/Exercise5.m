@@ -87,13 +87,39 @@ dy_dt = @(t, y) [fs(t)-y(2)/I; y(1)/C+R*fs(t)-R*y(2)/I];
 [t,y]=ode45(dy_dt,t,y(end,:));
 cost=sum(abs(y(:,1)-cos(t))); % Here, y(:,1) is the mass position
 
+
+mincost = fmincon(@costfun, [1,10], [1,1], 200,[],[],[1,1])
+
 hold on
 
+plot(t, cos(t))
 plot(t, arrayfun(fs, t))
 plot(t, y)
 
 hold off
-legend('fs', 'q', 'p')
+legend('cos(t)', 'fs', 'q', 'p')
+
+function cost=costfun(RC)
+    t = 10*pi:0.1:12*pi;
+    v = 1;
+    omega = 1;
+    I = 0.3;
+    R = RC(1);
+    C = RC(2);
+
+    T=0:pi:12*pi;
+    fs = @(t) (cos(t) >= 0) - (cos(t) < 0);
+
+    q_0 = 0;
+    p_0 = 0;
+    y_0 = [q_0; p_0];
+    dy_dt = @(t, y) [fs(t)-y(2)/I; y(1)/C+R*fs(t)-R*y(2)/I];
+    [~,y]=ode45(dy_dt,0:pi:10*pi,y_0);
+    [t,y]=ode45(dy_dt,t,y(end,:));
+    cost=sum(abs(y(:,1)-cos(t))); % Here, y(:,1) is the mass position
+    disp(cost)
+    plot(t, y)
+end
 
 function [c, ceq] = confun(x)
 % Nonlinear inequality constraints
