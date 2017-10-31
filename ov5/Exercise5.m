@@ -1,6 +1,6 @@
 %% Problem 1: Finding the tallest point on an island
 
-z = @(x) -sin(4*pi*x(1))*sin(5*pi*x(2))*(2 - x(1))*(2 - x(2)); %x in km
+z = @(x) -sin(4*pi*x(1)).*sin(5*pi*x(2)).*(2 - x(1)).*(2 - x(2)); %x in km
 options = optimoptions('fmincon', 'Display', 'off');
 
 % set z to negtive in order to use fmincon
@@ -8,6 +8,7 @@ options = optimoptions('fmincon', 'Display', 'off');
 %Quadratic (x_1 and x_2 from 0 to 1):
 
 testnormal = [0:0.1:1;0:0.1:1];
+
 testfmincon = [0.1, 0.1];
 xlength = length(testnormal);
 xmax = -100;
@@ -61,22 +62,22 @@ end
 
 fprintf('The highest peak is %f kms on point (%f, %f)(fmincon with different start values)\n',... 
                 -xmaxcircle, x_1maxpoint, x_2maxpoint);
-fprintf('The highest peak is %f kms on point %f (fmincon startpoint (0.1, 0.1)\n',...
-    -fvalcircle, xvalcircle);
+fprintf('The highest peak is %f kms on point (%f, %f) (fmincon startpoint(%f, %f)\n',...
+    -fvalcircle, xvalcircle(1), xvalcircle(2), tfminconcircle(1), tfminconcircle(2));
 
 function [c, ceq] = confun(x)
-% Nonlinear inequality constraints
-c = (x(1)-0.5)^2 + (x(2)-0.5)^2 - 0.5^2;
-% Nonlinear equality constraints
-ceq = [];
+    % Nonlinear inequality constraints
+    c = (x(1)-0.5)^2 + (x(2)-0.5)^2 - 0.5^2;
+    % Nonlinear equality constraints
+    ceq = [];
 end
 
 function [x, y]=RanCircleP(x1,y1,rc)
-%the function, must be on a folder in matlab path
-a=2*pi*rand;
-r=sqrt(rand);
-x=(rc*r)*cos(a)+x1;
-y=(rc*r)*sin(a)+y1;
+    %the function, must be on a folder in matlab path
+    a=2*pi*rand;
+    r=sqrt(rand);
+    x=(rc*r)*cos(a)+x1;
+    y=(rc*r)*sin(a)+y1;
 end
 
 %% Problem 2: Find the optimal values for R and C.
